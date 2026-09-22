@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Node.js / Next.js
+node_modules/
+.next/
+out/
+
+# Tooling
+.DS_Store
+coverage/
