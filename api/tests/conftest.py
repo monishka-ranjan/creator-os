@@ -1,12 +1,10 @@
 import uuid
 
-import pytest
 import pytest_asyncio
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from app.core.config import settings
-from app.workspaces.models import Membership, User, Workspace
 
 
 @pytest_asyncio.fixture

@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
@@ -56,7 +56,7 @@ async def authenticate_user(db: AsyncSession, data: LoginRequest) -> User:
 async def create_session(db: AsyncSession, user_id: uuid.UUID) -> SessionModel:
     session = SessionModel(
         user_id=user_id,
-        expires_at=datetime.now(timezone.utc) + SESSION_LIFETIME,
+        expires_at=datetime.now(UTC) + SESSION_LIFETIME,
     )
     db.add(session)
     await db.commit()
@@ -66,7 +66,7 @@ async def create_session(db: AsyncSession, user_id: uuid.UUID) -> SessionModel:
 
 async def get_session(db: AsyncSession, session_id: uuid.UUID) -> SessionModel | None:
     session = await db.scalar(select(SessionModel).where(SessionModel.id == session_id))
-    if not session or session.expires_at < datetime.now(timezone.utc):
+    if not session or session.expires_at < datetime.now(UTC):
         return None
     return session
 
